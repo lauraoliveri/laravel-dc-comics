@@ -13,8 +13,10 @@ class ComicSeeder extends Seeder
      */
     public function run(): void
     {
-        Comic::truncate();
+   
 
+        Comic::truncate();
+        
         $comics = config('comics');
 
         foreach ($comics as $comic) {

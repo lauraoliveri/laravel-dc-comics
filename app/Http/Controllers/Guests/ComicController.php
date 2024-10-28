@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Comic;
 
 class ComicController extends Controller
 {
@@ -12,7 +13,9 @@ class ComicController extends Controller
      */
     public function index()
     {
-        //
+        $comics = Comic::get();
+
+        return view('comics.index', compact('comics'));
     }
 
     /**
@@ -20,7 +23,7 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');
     }
 
     /**
@@ -28,7 +31,22 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:3|max:64',
+            'type' => 'required|min:3|max:16',
+            'series'=> 'required|min:3|max:64|',
+            'price' => 'required|integer',
+            'description' => 'required|min:1|max:4096',
+            'sale_date'=> 'nullable',
+            'thumb'=> 'nullable|url'
+        ]);
+
+        $data = $request->all();
+
+
+        $comic = Comic::create($data);
+
+        return redirect()->route('comics.show', ['comic' => $comic->id]);
     }
 
     /**
@@ -36,7 +54,7 @@ class ComicController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('comics.show', compact('comic'));
     }
 
     /**
@@ -44,22 +62,40 @@ class ComicController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:3|max:64',
+            'type' => 'required|min:3|max:16',
+            'series'=> 'required|min:3|max:64|',
+            'price' => 'required|integer',
+            'description' => 'required|min:1|max:4096',
+            'sale_date'=> 'nullable',
+            'thumb'=> 'nullable|url'
+        ]);
+
+        $data = $request->all();
+
+
+        $comic->update($data);
+
+
+        return redirect()->route('comics.show', ['comic' => $comic->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+
+        return redirect()->route('comics.index');
     }
 }
