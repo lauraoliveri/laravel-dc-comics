@@ -138,6 +138,29 @@
         @enderror
     </div>
 
+
+    <div class="mb-3">
+        <label for="img" class="form-label">
+            immagine
+            <span class="text-danger">*</span>
+        </label>
+        <textarea
+            required
+            maxlength="4096"
+            name="img"
+            class="form-control" @error('img') is-invalid @enderror"
+            id="img"
+            placeholder="Scrivi la immagine...">
+        </textarea>
+
+        {{-- In caso di errore nella immagine --}}
+        @error('img')
+            <div class="alert alert-danger my-4">
+                Errore immagine: {{ $message}}
+            </div>
+        @enderror
+    </div>
+
     {{-- Bottone per aggiungere il fumetto creato --}}
 
     <div>

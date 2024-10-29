@@ -19,7 +19,7 @@
 
         {{-- Immagine del fumetto --}}
 
-        <img src="{{ $pasta-thumb }}" class="card-img-top" alt="{{ $comic->title }}">
+        <img src="{{ $comic->img }}" class="card-img-top" alt="{{ $comic->title }}">
 
         {{-- Info generali --}}
         <ul>
@@ -30,7 +30,7 @@
                 Serie: {{ $comic->series }} 
             </li>
             <li>
-                Prezzo: {{ $comic->weight }} £
+                Prezzo: {{ $comic->price }} £
             </li>
         </ul>
 

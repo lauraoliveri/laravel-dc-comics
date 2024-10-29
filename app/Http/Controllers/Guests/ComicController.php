@@ -34,15 +34,14 @@ class ComicController extends Controller
         $request->validate([
             'title' => 'required|min:3|max:64',
             'type' => 'required|min:3|max:16',
-            'series'=> 'required|min:3|max:64|',
             'price' => 'required|integer',
             'description' => 'required|min:1|max:4096',
             'sale_date'=> 'nullable',
-            'thumb'=> 'nullable|url'
+            'img'=> 'nullable'
         ]);
 
         $data = $request->all();
-
+        // \Log::debug($data);
 
         $comic = Comic::create($data);
 
@@ -52,8 +51,15 @@ class ComicController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    /*public function show(string $id)
     {
+        $comic = Comic::find($id);
+        return view('comics.show', compact('comic'));
+    }*/
+
+    public function show(Comic $comic)
+    {
+        
         return view('comics.show', compact('comic'));
     }
 
@@ -82,6 +88,7 @@ class ComicController extends Controller
 
         $data = $request->all();
 
+        
 
         $comic->update($data);
 
